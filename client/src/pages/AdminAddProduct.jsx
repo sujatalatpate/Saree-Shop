@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { createProduct } from '../services/api';
+// import { createProduct } from '../services/api';
 
 function AdminAddProduct() {
 
@@ -33,13 +33,14 @@ function AdminAddProduct() {
         e.preventDefault();
 
         try {
+            
+            let calculatedDiscount = 0;
 
             const token = localStorage.getItem('token');
 
             const original = Number(product.originalPrice);
             const selling = Number(product.price);
 
-            let calculatedDiscount = 0;
 
             if (original > selling) {
 

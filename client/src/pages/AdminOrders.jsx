@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { getAllOrders, updateOrderStatus } from '../services/api';
 
 function AdminOrders() {
 
     const [orders, setOrders] = useState([]);
-    const token = localStorage.getItem('token');
 
 
     useEffect(() => {

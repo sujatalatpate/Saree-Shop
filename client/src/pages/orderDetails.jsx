@@ -8,6 +8,8 @@ function OrderDetails() {
 
   const [order, setOrder] = useState(null);
 
+  // eslint-disable-next-line
+
   useEffect(() => {
 
     fetchOrder();

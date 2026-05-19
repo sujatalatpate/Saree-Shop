@@ -1,0 +1,261 @@
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CartContext } from '../../context/CartContext';
+import { WishlistContext } from '../../context/WishlistContext';
+
+function Navbar() {
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const { cart } = useContext(CartContext);
+    const { wishlist } = useContext(WishlistContext);
+
+    const navigate = useNavigate();
+
+    // ✅ SEARCH STATE
+    const [search, setSearch] = useState('');
+
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
+    // ✅ SEARCH SUBMIT
+    const handleSearch = (e) => {
+        e.preventDefault();
+
+        navigate(`/?search=${search}`);
+    };
+
+    return (
+
+        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3">
+
+            <div className="container">
+
+                {/* LOGO */}
+                <Link
+                    className="navbar-brand fw-bold fs-3 text-dark"
+                    to="/"
+                >
+                    🧵 SareeShop
+                </Link>
+
+                {/* MOBILE TOGGLE */}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarContent"
+                >
+
+
+                    {/* RIGHT SIDE */}
+                    <div className="d-flex align-items-center w-100">
+
+  {/* SEARCH CENTER */}
+  {!user?.isAdmin && user && (
+
+    <form
+      className="mx-auto"
+      style={{
+        width: '45%'
+      }}
+      onSubmit={handleSearch}
+    >
+
+      <div className="position-relative">
+
+        <input
+          className="form-control rounded-pill px-4 py-2 shadow-sm border-0"
+          type="search"
+          placeholder="Search Silk, Cotton, Designer..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={{
+            background: '#f5f5f5'
+          }}
+        />
+
+        <span
+          style={{
+            position: 'absolute',
+            right: '18px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            fontSize: '18px'
+          }}
+        >
+          🔍
+        </span>
+
+      </div>
+
+    </form>
+
+  )}
+
+  {/* RIGHT SIDE */}
+  <div className="d-flex align-items-center gap-4 ms-auto">
+
+    <Link
+      to="/"
+      className="text-dark text-decoration-none fw-semibold"
+    >
+      Home
+    </Link>
+
+    {user ? (
+
+      <>
+
+        {/* CUSTOMER */}
+        {!user.isAdmin && (
+
+          <>
+
+            {/* CART */}
+            <Link
+              to="/cart"
+              className="position-relative text-decoration-none"
+              style={{
+                fontSize: '24px'
+              }}
+            >
+              🛒
+
+              {cart.length > 0 && (
+
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+
+                  {cart.length}
+
+                </span>
+
+              )}
+
+            </Link>
+
+            {/* WISHLIST */}
+            <Link
+              className="nav-link position-relative d-inline-block"
+              to="/wishlist"
+            >
+
+              <span
+                style={{
+                  fontSize: '28px'
+                }}
+              >
+                🤍
+              </span>
+
+              {wishlist.length > 0 && (
+
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '0px',
+                    right: '-8px',
+                    background: '#ff1744',
+                    color: '#fff',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '2px solid white'
+                  }}
+                >
+                  {wishlist.length}
+                </span>
+
+              )}
+
+            </Link>
+
+            {/* ORDERS */}
+            <Link
+              to="/orders"
+              className="text-decoration-none text-dark fw-semibold"
+            >
+              Orders
+            </Link>
+
+          </>
+
+        )}
+
+        {/* ADMIN */}
+        {user.isAdmin && (
+
+          <>
+
+            <Link
+              to="/admin/add-product"
+              className="btn btn-warning rounded-pill"
+            >
+              Add Product
+            </Link>
+
+            <Link
+              to="/admin/orders"
+              className="btn btn-dark rounded-pill"
+            >
+              Manage Orders
+            </Link>
+
+          </>
+
+        )}
+
+        {/* USER */}
+        <span className="fw-semibold text-secondary">
+          Hi, {user.name}
+        </span>
+
+        {/* LOGOUT */}
+        <button
+          className="btn btn-danger rounded-pill px-4"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
+      </>
+
+    ) : (
+
+      <Link
+        to="/login"
+        className="btn btn-dark rounded-pill px-4"
+      >
+        Login
+      </Link>
+
+    )}
+
+  </div>
+
+</div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    );
+}
+
+export default Navbar;

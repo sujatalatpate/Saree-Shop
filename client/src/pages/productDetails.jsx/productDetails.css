@@ -1,0 +1,13 @@
+/* ProductDetail.css */
+
+.product-sticky {
+  position: sticky;
+  top: 110px;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .product-sticky {
+    position: static;
+  }
+}

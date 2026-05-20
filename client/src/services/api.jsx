@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://saree-shop-jozn.onrender.com'
+  baseURL: 'https://saree-shop-jozn.onrender.com/api'
 });
 
 // TOKEN

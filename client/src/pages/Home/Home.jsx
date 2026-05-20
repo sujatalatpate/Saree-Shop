@@ -14,7 +14,10 @@ function Home() {
   const [maxPrice, setMaxPrice] = useState('');
   const [showTrending, setShowTrending] = useState(false);
   const [showNewArrival, setShowNewArrival] = useState(false);
-  const [visibleProducts, setVisibleProducts] = useState(12);
+  const PRODUCTS_PER_LOAD = 8;
+
+const [visibleProducts, setVisibleProducts] =
+  useState(PRODUCTS_PER_LOAD);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,7 +35,7 @@ function Home() {
         setLoading(true);
 
         const res = await fetchProducts();
-
+       console.log(res.data);
         setProducts(res.data);
 
         const viewed =
@@ -654,7 +657,7 @@ function Home() {
 
         </section>
         {/* SHOW MORE BUTTON */}
-{visibleProducts < filteredProducts.length && (
+{/* {visibleProducts < filteredProducts.length && (
 
   <div className="text-center mt-5 mb-5">
 
@@ -670,6 +673,24 @@ function Home() {
       onClick={() =>
         setVisibleProducts(
           prev => prev + 12
+        )
+      }
+    >
+      Show More Products
+    </button>
+
+  </div>
+
+)} */}
+{filteredProducts.length > visibleProducts && (
+
+  <div className="text-center mt-5 mb-5">
+
+    <button
+      className="btn btn-dark px-5 py-3 rounded-pill shadow"
+      onClick={() =>
+        setVisibleProducts(
+          prev => prev + PRODUCTS_PER_LOAD
         )
       }
     >

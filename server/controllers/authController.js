@@ -17,8 +17,10 @@ exports.register = async (req, res) => {
     const user = await User.create({
       name,
       email: email.trim().toLowerCase(),
-      password: hashedPassword
+      password: hashedPassword,
+      isAdmin: false
     });
+    console.log(user);
 
     res.json({ message: "Registered successfully" });
   } catch (err) {

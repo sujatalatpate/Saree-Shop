@@ -11,6 +11,11 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+app.use(cors({
+  origin: "https://your-project.vercel.app",
+  credentials: true
+}));
+
 // Routes
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/uploads', express.static('uploads'));

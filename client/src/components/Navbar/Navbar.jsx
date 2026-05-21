@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import { WishlistContext } from '../../context/WishlistContext';
+import '../Navbar/Navbar.css'
 
 function Navbar() {
 
@@ -21,11 +22,19 @@ function Navbar() {
     };
 
     // ✅ SEARCH SUBMIT
-    const handleSearch = (e) => {
+   const handleSearch = (e) => {
         e.preventDefault();
 
         navigate(`/?search=${search}`);
     };
+
+     const closeNavbar = () => {
+  const navbar = document.getElementById('navbarContent');
+
+  if (navbar.classList.contains('show')) {
+    navbar.classList.remove('show');
+  }
+};
 
     return (
 
@@ -105,96 +114,175 @@ function Navbar() {
   {/* RIGHT SIDE */}
   <div className="d-flex align-items-center gap-4 ms-auto">
 
-    <Link
-      to="/"
-      className="text-dark text-decoration-none fw-semibold"
-    >
-      Home
-    </Link>
+    {/* HOME */}
+  <Link
+    to="/"
+    className="text-dark text-decoration-none fw-semibold d-none d-lg-block"
+  >
+    Home
+  </Link>
 
-    {user ? (
+     {user ? (
 
-      <>
+    <>
 
-        {/* CUSTOMER */}
-        {!user.isAdmin && (
+      {/* ================= DESKTOP ONLY ================= */}
+      {!user.isAdmin && (
 
-          <>
+        <div className="d-none d-lg-flex align-items-center gap-4">
 
-            {/* CART */}
-            <Link
-              to="/cart"
-              className="position-relative text-decoration-none"
+          {/* CART */}
+          <Link
+            to="/cart"
+            className="position-relative text-decoration-none"
+            style={{
+              fontSize: '24px'
+            }}
+          >
+            🛒
+
+            {cart.length > 0 && (
+
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+
+                {cart.length}
+
+              </span>
+
+            )}
+
+          </Link>
+
+          {/* WISHLIST */}
+          <Link
+            className="nav-link position-relative d-inline-block"
+            to="/wishlist"
+          >
+
+            <span
               style={{
-                fontSize: '24px'
+                fontSize: '28px'
               }}
             >
-              🛒
+              🤍
+            </span>
 
-              {cart.length > 0 && (
-
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-
-                  {cart.length}
-
-                </span>
-
-              )}
-
-            </Link>
-
-            {/* WISHLIST */}
-            <Link
-              className="nav-link position-relative d-inline-block"
-              to="/wishlist"
-            >
+            {wishlist.length > 0 && (
 
               <span
                 style={{
-                  fontSize: '28px'
+                  position: 'absolute',
+                  top: '0px',
+                  right: '-8px',
+                  background: '#ff1744',
+                  color: '#fff',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid white'
                 }}
               >
-                🤍
+                {wishlist.length}
               </span>
 
-              {wishlist.length > 0 && (
+            )}
 
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: '0px',
-                    right: '-8px',
-                    background: '#ff1744',
-                    color: '#fff',
-                    borderRadius: '50%',
-                    minWidth: '20px',
-                    height: '20px',
-                    fontSize: '10px',
-                    fontWeight: '700',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '2px solid white'
-                  }}
-                >
-                  {wishlist.length}
-                </span>
+          </Link>
 
-              )}
+          {/* ORDERS */}
+          <Link
+            to="/orders"
+            className="text-decoration-none text-dark fw-semibold"
+          >
+            Orders
+          </Link>
 
-            </Link>
+        </div>
 
-            {/* ORDERS */}
-            <Link
-              to="/orders"
-              className="text-decoration-none text-dark fw-semibold"
-            >
-              Orders
-            </Link>
+      )}
+      {/* ================= MOBILE ONLY ================= */}
+      <div className="d-lg-none w-100">
 
-          </>
+        <Link
+          to="/"
+          className="nav-link"
+          onClick={closeNavbar}
+        >
+          Home
+        </Link>
 
-        )}
+        <Link
+          to="/cart"
+          className="nav-link"
+          onClick={closeNavbar}
+        >
+          Cart
+        </Link>
+
+        <Link
+          to="/wishlist"
+          className="nav-link"
+          onClick={closeNavbar}
+        >
+          Wishlist
+        </Link>
+
+        <Link
+          to="/orders"
+          className="nav-link"
+          onClick={closeNavbar}
+        >
+          Orders
+        </Link>
+
+        <button
+          onClick={() => {
+            handleLogout();
+            closeNavbar();
+          }}
+          className="nav-link border-0 bg-transparent text-start text-danger w-100"
+        >
+          Logout
+        </button>
+
+      </div>
+
+      {/* DESKTOP USER */}
+      <div className="d-none d-lg-flex align-items-center gap-3">
+
+        <span className="fw-semibold text-secondary">
+          Hi, {user.name}
+        </span>
+
+        <button
+          className="btn btn-danger rounded-pill px-4"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
+      </div>
+
+    </>
+
+  ) : (
+
+    <Link
+      to="/login"
+      className="btn btn-dark rounded-pill px-4"
+      onClick={closeNavbar}
+    >
+      Login
+    </Link>
+
+  )}
+
+</div>
 
         {/* ADMIN */}
         {user.isAdmin && (
@@ -219,12 +307,12 @@ function Navbar() {
 
         )}
 
-        {/* USER */}
-        <span className="fw-semibold text-secondary">
+        
+
+        {/* <span className="fw-semibold text-secondary">
           Hi, {user.name}
         </span>
 
-        {/* LOGOUT */}
         <button
           className="btn btn-danger rounded-pill px-4"
           onClick={handleLogout}
@@ -239,13 +327,14 @@ function Navbar() {
       <Link
         to="/login"
         className="btn btn-dark rounded-pill px-4"
+        onClick={closeNavbar}
       >
         Login
       </Link>
 
     )}
 
-  </div>
+  </div> */}
 
 </div>
 
@@ -258,4 +347,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default Navbar; 

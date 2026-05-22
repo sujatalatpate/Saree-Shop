@@ -14,10 +14,11 @@ function Home() {
   const [maxPrice, setMaxPrice] = useState('');
   const [showTrending, setShowTrending] = useState(false);
   const [showNewArrival, setShowNewArrival] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const PRODUCTS_PER_LOAD = 8;
 
-const [visibleProducts, setVisibleProducts] =
-  useState(PRODUCTS_PER_LOAD);
+  const [visibleProducts, setVisibleProducts] =
+    useState(PRODUCTS_PER_LOAD);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const [visibleProducts, setVisibleProducts] =
         setLoading(true);
 
         const res = await fetchProducts();
-       console.log(res.data);
+        console.log(res.data);
         setProducts(res.data);
 
         const viewed =
@@ -392,7 +393,29 @@ const [visibleProducts, setVisibleProducts] =
       )}
 
       <div className="container">
-        <div className="bg-white p-3 rounded-4 shadow-sm mb-4">
+        {/* MOBILE FILTER BUTTON */}
+        <div className="d-lg-none mb-3">
+
+          <button
+            className="btn btn-dark w-100 rounded-pill"
+            onClick={() =>
+              setShowMobileFilters(!showMobileFilters)
+            }
+          >
+            {showMobileFilters
+              ? 'Close Filters'
+              : 'Filter Products'}
+          </button>
+
+        </div>
+        <div
+          className={`
+    bg-white p-3 rounded-4 shadow-sm mb-4
+    ${showMobileFilters
+              ? 'd-block'
+              : 'd-none d-lg-block'}
+  `}
+        >
 
           <div className="row g-3">
 
@@ -528,7 +551,7 @@ const [visibleProducts, setVisibleProducts] =
           </div>
 
         </div>
-        
+
 
         {/* RECENTLY VIEWED */}
         {recentlyViewed.length > 0 && (
@@ -657,7 +680,7 @@ const [visibleProducts, setVisibleProducts] =
 
         </section>
         {/* SHOW MORE BUTTON */}
-{/* {visibleProducts < filteredProducts.length && (
+        {/* {visibleProducts < filteredProducts.length && (
 
   <div className="text-center mt-5 mb-5">
 
@@ -682,32 +705,32 @@ const [visibleProducts, setVisibleProducts] =
   </div>
 
 )} */}
-{filteredProducts.length > visibleProducts && (
+        {filteredProducts.length > visibleProducts && (
 
-  <div className="text-center mt-5 mb-5">
+          <div className="text-center mt-5 mb-5">
 
-    <button
-      className="btn btn-dark px-5 py-3 rounded-pill shadow"
-      onClick={() =>
-        setVisibleProducts(
-          prev => prev + PRODUCTS_PER_LOAD
-        )
-      }
-    >
-      Show More Products
-    </button>
+            <button
+              className="btn btn-dark px-5 py-3 rounded-pill shadow"
+              onClick={() =>
+                setVisibleProducts(
+                  prev => prev + PRODUCTS_PER_LOAD
+                )
+              }
+            >
+              Show More Products
+            </button>
 
-  </div>
+          </div>
 
-)}
+        )}
 
-        
+
 
       </div>
-      
+
 
     </div>
-    
+
 
 
   );

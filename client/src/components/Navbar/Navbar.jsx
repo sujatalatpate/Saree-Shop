@@ -33,14 +33,22 @@ function Navbar() {
 
     navigate(`/?search=${search}`);
   };
+const closeNavbar = () => {
 
-  const closeNavbar = () => {
-    const navbar = document.getElementById('navbarContent');
+  const navbar =
+    document.getElementById('navbarContent');
 
-    if (navbar.classList.contains('show')) {
-      navbar.classList.remove('show');
-    }
-  };
+  if (navbar?.classList.contains('show')) {
+
+    navbar.classList.remove('show');
+
+  }
+
+  document
+    .querySelector('.navbar-toggler')
+    ?.classList.add('collapsed');
+
+};
 
   return (
 
@@ -48,274 +56,290 @@ function Navbar() {
 
       <div className="container">
 
-        {/* LOGO */}
-        <Link
-          className="navbar-brand fw-bold fs-3 text-dark"
-          to="/"
-        >
-          🧵 SareeShop
-        </Link>
+        {/* TOP BAR */}
+        <div className="d-flex justify-content-between align-items-center w-100">
 
-        {/* MOBILE TOGGLE */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+          {/* LOGO */}
+          <Link
+            className="navbar-brand fw-bold fs-4 text-dark mb-0"
+            to="/"
+          >
+            🧵 SareeShop
+          </Link>
 
-        <div
-          className="collapse navbar-collapse"
-          id="navbarContent"
-        >
+          <div className="d-flex align-items-center gap-3">
 
-
-          {/* RIGHT SIDE */}
-          <div className="d-flex align-items-center w-100">
-
-            {/* SEARCH CENTER */}
-            {!user?.isAdmin && user && (
-
-              <form
-                className="mx-auto"
-                style={{
-                  width: '45%'
-                }}
-                onSubmit={handleSearch}
-              >
-
-                <div className="position-relative">
-
-                  <input
-                    className="form-control rounded-pill px-4 py-2 shadow-sm border-0"
-                    type="search"
-                    placeholder="Search Silk, Cotton, Designer..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    style={{
-                      background: '#f5f5f5'
-                    }}
-                  />
-
-                  <span
-                    style={{
-                      position: 'absolute',
-                      right: '18px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      fontSize: '18px'
-                    }}
-                  >
-                    🔍
-                  </span>
-
-                </div>
-
-              </form>
-
+            {/* MOBILE USER NAME */}
+            {user && (
+              <span className="d-lg-none fw-semibold text-secondary">
+                Hi, {user.name}
+              </span>
             )}
 
+            {/* TOGGLE */}
+            <button
+              className="navbar-toggler border-0 shadow-none"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarContent"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+          </div>
+
+
+          <div
+            className="collapse navbar-collapse mobile-menu"
+            id="navbarContent"
+          >
+
+
             {/* RIGHT SIDE */}
-            <div className="d-flex align-items-center gap-4 ms-auto">
+            <div className="d-flex align-items-center w-100">
 
-              {/* HOME */}
-              <Link
-                to="/"
-                className="text-dark text-decoration-none fw-semibold d-none d-lg-block"
-              >
-                Home
-              </Link>
+              {/* SEARCH CENTER */}
+              {!user?.isAdmin && user && (
 
-              {user ? (
+                <form
+                  className="me-lg-5"
+                  style={{
+                    width: '45%'
+                  }}
+                  onSubmit={handleSearch}
+                >
 
-                <>
+                  <div className="position-relative">
 
-                  {/* ================= DESKTOP ONLY ================= */}
-                  {!user.isAdmin && (
+                    <input
+                      className="form-control rounded-pill px-4 py-2 shadow-sm border-0"
+                      type="search"
+                      placeholder="Search Silk, Cotton, Designer..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      style={{
+                        background: '#f5f5f5'
+                      }}
+                    />
 
-                    <div className="d-none d-lg-flex align-items-center gap-4">
+                    <span
+                      style={{
+                        position: 'absolute',
+                        right: '18px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        fontSize: '18px'
+                      }}
+                    >
+                      🔍
+                    </span>
 
-                      {/* CART */}
-                      <Link
-                        to="/cart"
-                        className="position-relative text-decoration-none"
-                        style={{
-                          fontSize: '24px'
-                        }}
-                      >
-                        🛒
+                  </div>
 
-                        {cart.length > 0 && (
+                </form>
 
-                          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+              )}
 
-                            {cart.length}
+              {/* RIGHT SIDE */}
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-4 ms-auto">
 
-                          </span>
+                {/* HOME */}
+                <Link
+                  to="/"
+                  className="text-dark text-decoration-none fw-semibold d-none d-lg-block"
+                >
+                  Home
+                </Link>
 
-                        )}
+                {user ? (
 
-                      </Link>
+                  <>
 
-                      {/* WISHLIST */}
-                      <Link
-                        className="nav-link position-relative d-inline-block"
-                        to="/wishlist"
-                      >
+                    {/* ================= DESKTOP ONLY ================= */}
+                    {!user.isAdmin && (
 
-                        <span
+                      <div className="d-none d-lg-flex align-items-center gap-4">
+
+                        {/* CART */}
+                        <Link
+                          to="/cart"
+                          className="position-relative text-decoration-none"
                           style={{
-                            fontSize: '28px'
+                            fontSize: '24px'
                           }}
                         >
-                          🤍
-                        </span>
+                          🛒
 
-                        {wishlist.length > 0 && (
+                          {cart.length > 0 && (
+
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+
+                              {cart.length}
+
+                            </span>
+
+                          )}
+
+                        </Link>
+
+                        {/* WISHLIST */}
+                        <Link
+                          className="nav-link position-relative d-inline-block"
+                          to="/wishlist"
+                        >
 
                           <span
                             style={{
-                              position: 'absolute',
-                              top: '0px',
-                              right: '-8px',
-                              background: '#ff1744',
-                              color: '#fff',
-                              borderRadius: '50%',
-                              minWidth: '20px',
-                              height: '20px',
-                              fontSize: '10px',
-                              fontWeight: '700',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              border: '2px solid white'
+                              fontSize: '28px'
                             }}
                           >
-                            {wishlist.length}
+                            🤍
                           </span>
 
-                        )}
+                          {wishlist.length > 0 && (
 
+                            <span
+                              style={{
+                                position: 'absolute',
+                                top: '0px',
+                                right: '-8px',
+                                background: '#ff1744',
+                                color: '#fff',
+                                borderRadius: '50%',
+                                minWidth: '20px',
+                                height: '20px',
+                                fontSize: '10px',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                border: '2px solid white'
+                              }}
+                            >
+                              {wishlist.length}
+                            </span>
+
+                          )}
+
+                        </Link>
+
+                        {/* ORDERS */}
+                        <Link
+                          to="/orders"
+                          className="text-decoration-none text-dark fw-semibold"
+                        >
+                          Orders
+                        </Link>
+
+                      </div>
+
+                    )}
+                    {/* ================= MOBILE ONLY ================= */}
+                    <div className="d-lg-none w-100 mt-3">
+
+                      <Link
+                        to="/"
+                        className="nav-link"
+                        onClick={closeNavbar}
+                      >
+                        Home
                       </Link>
 
-                      {/* ORDERS */}
+                      <Link
+                        to="/cart"
+                        className="nav-link"
+                        onClick={closeNavbar}
+                      >
+                        Cart
+                      </Link>
+
+                      <Link
+                        to="/wishlist"
+                        className="nav-link"
+                        onClick={closeNavbar}
+                      >
+                        Wishlist
+                      </Link>
+
                       <Link
                         to="/orders"
-                        className="text-decoration-none text-dark fw-semibold"
+                        className="nav-link"
+                        onClick={closeNavbar}
                       >
                         Orders
                       </Link>
 
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          closeNavbar();
+                        }}
+                        className="nav-link border-0 bg-transparent text-start text-danger w-100"
+                      >
+                        Logout
+                      </button>
+
                     </div>
 
-                  )}
-                  {/* ================= MOBILE ONLY ================= */}
-                  <div className="d-lg-none w-100">
+                    {/* DESKTOP USER */}
+                    <div className="d-none d-lg-flex align-items-center gap-3">
 
-                    <Link
-                      to="/"
-                      className="nav-link"
-                      onClick={closeNavbar}
-                    >
-                      Home
-                    </Link>
+                      <span className="fw-semibold text-secondary">
+                        Hi, {user.name}
+                      </span>
 
-                    <Link
-                      to="/cart"
-                      className="nav-link"
-                      onClick={closeNavbar}
-                    >
-                      Cart
-                    </Link>
+                      <button
+                        className="btn btn-danger rounded-pill px-4"
+                        onClick={handleLogout}
+                        type='button'
+                      >
+                        Logout
+                      </button>
 
-                    <Link
-                      to="/wishlist"
-                      className="nav-link"
-                      onClick={closeNavbar}
-                    >
-                      Wishlist
-                    </Link>
+                    </div>
 
-                    <Link
-                      to="/orders"
-                      className="nav-link"
-                      onClick={closeNavbar}
-                    >
-                      Orders
-                    </Link>
+                  </>
 
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        closeNavbar();
-                      }}
-                      className="nav-link border-0 bg-transparent text-start text-danger w-100"
-                    >
-                      Logout
-                    </button>
+                ) : (
 
-                  </div>
+                  <Link
+                    to="/login"
+                    className="nav-link d-lg-none"
+                    onClick={closeNavbar}
+                  >
+                    Login
+                  </Link>
 
-                  {/* DESKTOP USER */}
-                  <div className="d-none d-lg-flex align-items-center gap-3">
+                )}
 
-                    <span className="fw-semibold text-secondary">
-                      Hi, {user.name}
-                    </span>
+              </div>
 
-                    <button
-                      className="btn btn-danger rounded-pill px-4"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
+              {/* ADMIN */}
+              {user?.isAdmin && (
 
-                  </div>
+                <>
+
+                  <Link
+                    to="/admin/add-product"
+                    className="btn btn-warning rounded-pill"
+                  >
+                    Add Product
+                  </Link>
+
+                  <Link
+                    to="/admin/orders"
+                    className="btn btn-dark rounded-pill"
+                  >
+                    Manage Orders
+                  </Link>
 
                 </>
 
-              ) : (
-
-                <Link
-                  to="/login"
-                  className="btn btn-dark rounded-pill px-4"
-                  onClick={closeNavbar}
-                >
-                  Login
-                </Link>
-
               )}
 
-            </div>
-
-            {/* ADMIN */}
-            {user?.isAdmin && (
-
-              <>
-
-                <Link
-                  to="/admin/add-product"
-                  className="btn btn-warning rounded-pill"
-                >
-                  Add Product
-                </Link>
-
-                <Link
-                  to="/admin/orders"
-                  className="btn btn-dark rounded-pill"
-                >
-                  Manage Orders
-                </Link>
-
-              </>
-
-            )}
 
 
-
-            {/* <span className="fw-semibold text-secondary">
+              {/* <span className="fw-semibold text-secondary">
           Hi, {user.name}
         </span>
 
@@ -342,10 +366,11 @@ function Navbar() {
 
   </div> */}
 
+            </div>
+
           </div>
 
         </div>
-
       </div>
 
     </nav>

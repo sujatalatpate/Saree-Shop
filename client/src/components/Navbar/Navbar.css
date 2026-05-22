@@ -1,37 +1,44 @@
 @media (max-width: 991px) {
 
-  .navbar {
-    padding: 10px 14px;
+  .mobile-menu {
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    width: 220px;
+    background: white;
+    padding: 12px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 999;
   }
 
-  .navbar-collapse {
-    background: #fff;
-    margin-top: 10px;
-    padding: 10px 14px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  }
-
-  .navbar-collapse .nav-link {
-    padding: 10px 6px;
-    font-size: 15px;
+  .mobile-menu .nav-link {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f2f2f2;
     font-weight: 500;
     color: #333 !important;
-    border-bottom: 1px solid #f3f3f3;
-    margin-bottom: 2px;
   }
 
-  .navbar-collapse .nav-link:last-child {
+  .mobile-menu .nav-link:last-child {
     border-bottom: none;
   }
 
-  .navbar-toggler {
-    border: none;
-    padding: 2px 6px;
+}
+
+@media (max-width: 991px) {
+
+  .mobile-filter-box {
+    background: #fafafa;
+    padding: 14px;
+    border-radius: 14px;
+    margin-top: 10px;
+    border: 1px solid #f1f1f1;
   }
 
-  .navbar-toggler:focus {
-    box-shadow: none;
+  .mobile-filter-box .form-select {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 14px;
   }
 
 }

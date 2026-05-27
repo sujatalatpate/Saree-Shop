@@ -42,3 +42,12 @@
   }
 
 }
+
+.mobile-menu {
+  z-index: 9999;
+}
+
+.navbar-collapse.show {
+  background: white;
+  padding: 15px;
+}

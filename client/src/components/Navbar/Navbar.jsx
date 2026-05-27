@@ -322,7 +322,6 @@ function Navbar() {
                           className="btn btn-danger rounded-pill px-4"
                           onClick={handleLogout}
                           type='button'
-                          onClick={closeNavbar}
                         >
                           Logout
                         </button>

@@ -12,7 +12,6 @@ function Login() {
     email: '', password: ''
   });
   const { addToCart } = useContext(CartContext);
-  const navigate = useNavigate();
 
 //  const handleLogin = async () => {
 //   try {

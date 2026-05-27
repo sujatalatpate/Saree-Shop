@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useContext } from 'react';
 import { CartContext } from '../context/CartContext';
-
+import { loginUser } from '../services/api';
 
 
 function Login() {
@@ -50,12 +49,10 @@ function Login() {
 const navigate = useNavigate();
 
 const handleLogin = async () => {
+
   try {
 
-    const res = await axios.post(
-      'http://localhost:5000/api/auth/login',
-      form
-    );
+    const res = await loginUser(form);
 
     localStorage.setItem(
       'user',
@@ -67,17 +64,6 @@ const handleLogin = async () => {
       res.data.token
     );
 
-    const pending =
-      localStorage.getItem('pendingProduct');
-
-    if (pending) {
-
-      addToCart(JSON.parse(pending));
-
-      localStorage.removeItem('pendingProduct');
-
-    }
-
     navigate('/');
 
   } catch (err) {
@@ -85,6 +71,7 @@ const handleLogin = async () => {
     alert(err.response.data.message);
 
   }
+
 };
 
   return (

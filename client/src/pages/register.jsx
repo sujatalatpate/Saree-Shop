@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext.jsx';
-import axios from 'axios';
+import { registerUser, loginUser } from '../services/api.jsx';
 
 function Register() {
   const [form, setForm] = useState({
@@ -11,36 +11,36 @@ function Register() {
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
+
   try {
-    await axios.post('http://localhost:5000/api/auth/register', form);
 
-    alert("Registered successfully");
+    await registerUser(form);
 
-    // Optional: auto login after register
-    const loginRes = await axios.post(
-      'http://localhost:5000/api/auth/login',
-      { email: form.email, password: form.password }
+    const loginRes = await loginUser({
+      email: form.email,
+      password: form.password
+    });
+
+    localStorage.setItem(
+      'token',
+      loginRes.data.token
     );
 
-    localStorage.setItem('token', loginRes.data.token);
-    localStorage.setItem('user', JSON.stringify(loginRes.data.user));
+    localStorage.setItem(
+      'user',
+      JSON.stringify(loginRes.data.user)
+    );
 
-    // ✅ Handle pending product
-    const pending = localStorage.getItem('pendingProduct');
-
-    if (pending) {
-      addToCart(JSON.parse(pending));
-      localStorage.removeItem('pendingProduct');
-    }
-
-   navigate('/');
+    navigate('/');
 
   } catch (err) {
-    alert(err.response.data.message);
-  }
-};
 
+    alert(err.response.data.message);
+
+  }
+
+};
   return (
     <div className="container mt-4">
       <h2>Signup</h2>

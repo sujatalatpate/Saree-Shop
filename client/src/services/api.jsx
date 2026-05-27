@@ -50,26 +50,36 @@ export const createOrder = (data) =>
 export const getAllOrders = () =>
   API.get('/orders/all');
 
-
-// UPDATE STATUS
 export const updateOrderStatus = (
   id,
   status
 ) => {
 
-  const token = localStorage.getItem('token');
-
-  return axios.put(
-    `http://localhost:5000/api/orders/${id}/status`,
-    { status },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
+  return API.put(
+    `/orders/${id}/status`,
+    { status }
   );
 
 };
+// UPDATE STATUS
+// export const updateOrderStatus = (
+//   id,
+//   status
+// ) => {
+
+//   const token = localStorage.getItem('token');
+
+//   return axios.put(
+//     `http://localhost:5000/api/orders/${id}/status`,
+//     { status },
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`
+//       }
+//     }
+//   );
+
+// };
 
 export const getWishlist = (userId) =>
   API.get(`/auth/wishlist/${userId}`);

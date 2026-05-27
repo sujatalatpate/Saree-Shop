@@ -322,6 +322,7 @@ function Navbar() {
                           className="btn btn-danger rounded-pill px-4"
                           onClick={handleLogout}
                           type='button'
+                          onClick={closeNavbar}
                         >
                           Logout
                         </button>
@@ -398,34 +399,6 @@ function Navbar() {
                 </div>
 
               )}
-
-
-              {/* <span className="fw-semibold text-secondary">
-          Hi, {user.name}
-        </span>
-
-        <button
-          className="btn btn-danger rounded-pill px-4"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-
-      </>
-
-    ) : (
-
-      <Link
-        to="/login"
-        className="btn btn-dark rounded-pill px-4"
-        onClick={closeNavbar}
-      >
-        Login
-      </Link>
-
-    )}
-
-  </div> */}
 
             </div>
 

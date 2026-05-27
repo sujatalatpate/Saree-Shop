@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext.jsx';
 import axios from 'axios';
 
@@ -8,6 +9,7 @@ function Register() {
     name: '', email: '', password: ''
   });
   const { addToCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
   try {
@@ -32,7 +34,7 @@ function Register() {
       localStorage.removeItem('pendingProduct');
     }
 
-    window.location.href = '/';
+   navigate('/');
 
   } catch (err) {
     alert(err.response.data.message);
@@ -52,7 +54,7 @@ function Register() {
       <input type="password" className="form-control mb-2" placeholder="Password"
         onChange={e => setForm({...form, password: e.target.value})} />
 
-      <button className="btn btn-primary" onClick={handleSubmit}>
+      <button   type="button" className="btn btn-primary" onClick={handleSubmit}>
         Register
       </button>
     </div>

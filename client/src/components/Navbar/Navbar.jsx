@@ -33,22 +33,22 @@ function Navbar() {
 
     navigate(`/?search=${search}`);
   };
-const closeNavbar = () => {
+  const closeNavbar = () => {
 
-  const navbar =
-    document.getElementById('navbarContent');
+    const navbar =
+      document.getElementById('navbarContent');
 
-  if (navbar?.classList.contains('show')) {
+    if (navbar?.classList.contains('show')) {
 
-    navbar.classList.remove('show');
+      navbar.classList.remove('show');
 
-  }
+    }
 
-  document
-    .querySelector('.navbar-toggler')
-    ?.classList.add('collapsed');
+    document
+      .querySelector('.navbar-toggler')
+      ?.classList.add('collapsed');
 
-};
+  };
 
   return (
 
@@ -102,9 +102,10 @@ const closeNavbar = () => {
               {!user?.isAdmin && user && (
 
                 <form
-                  className="me-lg-5"
+                  className="mx-lg-auto"
                   style={{
-                    width: '45%'
+                    width: '100%',
+                    maxWidth: '450px'
                   }}
                   onSubmit={handleSearch}
                 >
@@ -141,22 +142,26 @@ const closeNavbar = () => {
               )}
 
               {/* RIGHT SIDE */}
-              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-4 ms-auto">
-
+              <div className="d-flex flex-column flex-lg-row align-items-start align-items-lg-center gap-3 gap-lg-4 ms-auto w-100 justify-content-lg-end">
                 {/* HOME */}
-                <Link
-                  to="/"
-                  className="text-dark text-decoration-none fw-semibold d-none d-lg-block"
-                >
-                  Home
-                </Link>
+                {/* HOME FOR NORMAL USER */}
+                {!user?.isAdmin && (
+
+                  <Link
+                    to="/"
+                    className="text-dark text-decoration-none fw-semibold d-none d-lg-block"
+                  >
+                    Home
+                  </Link>
+
+                )}
 
                 {user ? (
 
                   <>
 
                     {/* ================= DESKTOP ONLY ================= */}
-                    {!user.isAdmin && (
+                    {user && !user.isAdmin && (
 
                       <div className="d-none d-lg-flex align-items-center gap-4">
 
@@ -245,29 +250,53 @@ const closeNavbar = () => {
                         Home
                       </Link>
 
-                      <Link
-                        to="/cart"
-                        className="nav-link"
-                        onClick={closeNavbar}
-                      >
-                        Cart
-                      </Link>
+                      {!user?.isAdmin && (
+                        <>
+                          <Link
+                            to="/cart"
+                            className="nav-link"
+                            onClick={closeNavbar}
+                          >
+                            Cart
+                          </Link>
 
-                      <Link
-                        to="/wishlist"
-                        className="nav-link"
-                        onClick={closeNavbar}
-                      >
-                        Wishlist
-                      </Link>
+                          <Link
+                            to="/wishlist"
+                            className="nav-link"
+                            onClick={closeNavbar}
+                          >
+                            Wishlist
+                          </Link>
 
-                      <Link
-                        to="/orders"
-                        className="nav-link"
-                        onClick={closeNavbar}
-                      >
-                        Orders
-                      </Link>
+                          <Link
+                            to="/orders"
+                            className="nav-link"
+                            onClick={closeNavbar}
+                          >
+                            Orders
+                          </Link>
+                        </>
+                      )}
+
+                      {user?.isAdmin && (
+                        <>
+                          <Link
+                            to="/admin/add-product"
+                            className="nav-link"
+                            onClick={closeNavbar}
+                          >
+                            Add Product
+                          </Link>
+
+                          <Link
+                            to="/admin/orders"
+                            className="nav-link"
+                            onClick={closeNavbar}
+                          >
+                            Manage Orders
+                          </Link>
+                        </>
+                      )}
 
                       <button
                         onClick={() => {
@@ -278,65 +307,97 @@ const closeNavbar = () => {
                       >
                         Logout
                       </button>
-
                     </div>
 
                     {/* DESKTOP USER */}
-                    <div className="d-none d-lg-flex align-items-center gap-3">
+                    {!user?.isAdmin && (
 
-                      <span className="fw-semibold text-secondary">
-                        Hi, {user.name}
-                      </span>
+                      <div className="d-none d-lg-flex align-items-center gap-3">
 
-                      <button
-                        className="btn btn-danger rounded-pill px-4"
-                        onClick={handleLogout}
-                        type='button'
-                      >
-                        Logout
-                      </button>
+                        <span className="fw-semibold text-secondary">
+                          Hi, {user.name}
+                        </span>
 
-                    </div>
+                        <button
+                          className="btn btn-danger rounded-pill px-4"
+                          onClick={handleLogout}
+                          type='button'
+                        >
+                          Logout
+                        </button>
+
+                      </div>
+
+                    )}
 
                   </>
 
                 ) : (
 
-                  <Link
-                    to="/login"
-                    className="nav-link d-lg-none"
-                    onClick={closeNavbar}
-                  >
-                    Login
-                  </Link>
+                  <>
+                    {/* MOBILE */}
+                    <Link
+                      to="/login"
+                      className="nav-link d-lg-none"
+                      onClick={closeNavbar}
+                    >
+                      Login
+                    </Link>
+
+                    {/* DESKTOP */}
+                    <Link
+                      to="/login"
+                      className="btn btn-dark rounded-pill px-4 d-none d-lg-inline-block"
+                    >
+                      Login
+                    </Link>
+                  </>
 
                 )}
 
               </div>
 
-              {/* ADMIN */}
+              {/* ADMIN DESKTOP */}
               {user?.isAdmin && (
 
-                <>
+                <div className="d-none d-lg-flex align-items-center gap-3 ms-auto">
 
+                  {/* HOME */}
+                  <Link
+                    to="/"
+                    className="text-dark text-decoration-none fw-semibold"
+                  >
+                    Home
+                  </Link>
+
+                  {/* ADD PRODUCT */}
                   <Link
                     to="/admin/add-product"
-                    className="btn btn-warning rounded-pill"
+                    className="btn btn-warning rounded-pill px-4"
                   >
                     Add Product
                   </Link>
 
+                  {/* MANAGE ORDERS */}
                   <Link
                     to="/admin/orders"
-                    className="btn btn-dark rounded-pill"
+                    className="btn btn-dark rounded-pill px-4"
                   >
                     Manage Orders
                   </Link>
 
-                </>
+                  {/* LOGOUT */}
+                  <button
+                    className="btn btn-danger rounded-pill px-4"
+                    onClick={handleLogout}
+                    type="button"
+                  >
+                    Logout
+                  </button>
+
+                </div>
 
               )}
-
 
 
               {/* <span className="fw-semibold text-secondary">
